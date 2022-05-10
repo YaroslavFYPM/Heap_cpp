@@ -2,6 +2,8 @@
 #include <stdlib.h>
 #include <unistd.h>
 
+using namespace std;
+
 Heap::Heap()
 {
     m_data = new Node [HEAP_SIZE];
@@ -16,7 +18,7 @@ Heap::Heap(int capacity)
     m_size = 0;
 }
 
-Heap:Heap(const Heap& heap)
+Heap::Heap(const Heap& heap)
 {
     m_data = new Node [heap.get_capacity()];
     m_capacity = heap.get_capacity();
@@ -63,7 +65,7 @@ void Heap::sift_down(int parent)
 void Heap::sift_up(int child)
 {
     if (child > m_size) {
-        cerr << "Invalid argument: child = " << cild << endl;
+        cerr << "Invalid argument: child = " << child << endl;
         throw INVALID_ARGUMENT;
     }
 
@@ -88,7 +90,7 @@ void Heap::add(Node node)
     }
     m_data[m_size] = node;
     ++m_size;
-    sift_up(size-1);
+    sift_up(m_size-1);
 }
 
 Node Heap::get_min() const
@@ -131,17 +133,17 @@ Heap Heap::operator=(const Heap& heap2)
 ostream& operator<<(ostream& output, const Heap& heap)
 { 
     output << "Heap: capacity " << heap.get_capacity();
-    output << " current size " << s.get_size() << endl;
-    output << "data: " << endl;
+    output << ", current size " << heap.get_size() << endl;
+    output << "data: " << (void*)heap.get_data() << endl;
     int i = 1;
     int j = 1;
-    while (i < heap.get_size()) {
-        while (i < j*2) && (i < heap.get_size()) {
-            output << "(" << heap.get_data[i-1].key << heap.get_data[i-1].value << ") ";
+    while (i < heap.get_size() + 1) {
+        while ((i < j*2) && (i < heap.get_size() + 1)) {
+            output << "(" << heap.get_data()[i-1].key << ", " << heap.get_data()[i-1].value << ") ";
             ++i;
         }
         j *= 2;
         cout << endl;
     }
-
+    return output;
 }

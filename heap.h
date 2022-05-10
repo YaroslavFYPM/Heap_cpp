@@ -1,5 +1,4 @@
-#ifndef _HEAP_H_
-#define _HEAP_H_
+#pragma once
 
 #include <cstring>
 #include <iostream>
@@ -35,9 +34,9 @@ public:
     Heap operator=(const Heap& heap);
     friend ostream& operator<<(ostream& output, const Heap& heap);
 
-    int get_capacity() const { return capacity; };
-    int get_size() const { return size; };
-    Node* get_data() const { return data; };
+    int get_capacity() const { return m_capacity; };
+    int get_size() const { return m_size; };
+    Node* get_data() const { return m_data; };
 
 private:
     void sift_down(int parent);
