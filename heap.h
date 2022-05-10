@@ -30,7 +30,7 @@ public:
 
     void add(Node node);
     Node extract_min();
-    int get_min() const;
+    Node get_min() const;
 
     int get_capacity() const { return capacity; };
     int get_size() const { return size; };
