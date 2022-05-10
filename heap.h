@@ -32,6 +32,9 @@ public:
     Node extract_min();
     Node get_min() const;
 
+    Heap operator=(const Heap& heap);
+    friend ostream& operator<<(ostream& output, const Heap& heap);
+
     int get_capacity() const { return capacity; };
     int get_size() const { return size; };
     Node* get_data() const { return data; };

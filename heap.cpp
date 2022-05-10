@@ -116,3 +116,32 @@ Node Heap::extract_min()
 
     return min;
 }
+
+Heap Heap::operator=(const Heap& heap2)
+{
+    delete [] m_data;
+    m_data = new Node [heap2.get_capacity()];
+    m_capacity = heap2.get_capacity();
+    m_size = heap2.get_size();
+    for (int i = 0; i < m_size; ++i) 
+        m_data[i] = heap2.get_data()[i];
+    return *this;
+}
+
+ostream& operator<<(ostream& output, const Heap& heap)
+{ 
+    output << "Heap: capacity " << heap.get_capacity();
+    output << " current size " << s.get_size() << endl;
+    output << "data: " << endl;
+    int i = 1;
+    int j = 1;
+    while (i < heap.get_size()) {
+        while (i < j*2) && (i < heap.get_size()) {
+            output << "(" << heap.get_data[i-1].key << heap.get_data[i-1].value << ") ";
+            ++i;
+        }
+        j *= 2;
+        cout << endl;
+    }
+
+}
