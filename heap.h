@@ -1,11 +1,21 @@
-#pragma once
+#ifndef _HEAP_H_
+#define _HEAP_H_
 
-struct Node {
+#include <cstring>
+#include <iostream>
+
+#define HEAP_SIZE 10
+
+using namespace std;
+
+struct Node
+{
     int key;
     int value;
 };
 
-class Heap {
+class Heap
+{
 public:
     enum heap_error {
 	    HEAP_OVERFLOW = 1,
@@ -20,7 +30,7 @@ public:
 
     void add(Node node);
     Node extract_min();
-    int get_min();
+    int get_min() const;
 
     int get_capacity() const { return capacity; };
     int get_size() const { return size; };
