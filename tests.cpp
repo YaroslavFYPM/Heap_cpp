@@ -99,6 +99,54 @@ int main() {
     check_copy_constructor(*heap1);
     check_copy_constructor(*heap2);
 
+	try {
+		if ((heap2->get_min().value != 1) || (heap2->get_min().key != 1))
+			cout << "Test_10\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_10\t->\tFAILED" << endl;
+	}
+	cout << "Test_10\t->\tPASSED" << endl;
+
+	try {
+        Node node = heap2->extract_min();
+		if ((node.value != 1) || (node.key != 1))
+			cout << "Test_11\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_11\t->\tFAILED" << endl;
+	}
+	cout << "Test_11\t->\tPASSED" << endl;
+
+	try {
+        Node node = heap2->extract_min();
+		if ((node.value != 2) || (node.key != 2))
+			cout << "Test_12\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_12\t->\tFAILED" << endl;
+	}
+	cout << "Test_12\t->\tPASSED" << endl;
+
+	try {
+        Node node = heap2->extract_min();
+		if ((node.value != 3) || (node.key != 3))
+			cout << "Test_13\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_13\t->\tFAILED" << endl;
+	}
+	cout << "Test_13\t->\tPASSED" << endl;
+
+	try {
+		heap2->extract_min();
+	} catch (const Heap::heap_error &ex) {
+                if (ex == Heap::HEAP_EMPTY)
+			cout << "Test_14\t->\tPASSED" << endl;
+		else
+			cout << "Test_14\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_14\t->\tFAILED" << endl;
+	}
+
+    cout << *heap1;
+    cout << *heap2;
     delete heap1;
     delete heap2;
     return 0;
