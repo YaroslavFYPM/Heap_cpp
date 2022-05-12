@@ -11,6 +11,11 @@ Heap::Heap()
 
 Heap::Heap(int capacity)
 {
+    if (capacity < 1) {
+        cerr << "Invalid argument: " << capacity << endl;
+        throw INVALID_ARGUMENT;
+    }
+
     m_data = new Node [capacity];
     m_capacity = capacity;
     m_size = 0;

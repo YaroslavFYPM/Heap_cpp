@@ -14,6 +14,17 @@ int main() {
     Heap *heap3 = NULL;
 
     try {
+        heap1 = new Heap(-1);
+    } catch (const Heap::heap_error& ex) {
+        if (ex == Heap::INVALID_ARGUMENT)
+            cout << "Test_0\t->\tPASSED" << endl;
+        else 
+            cout << "Test_0\t->\tFAILED" << endl;
+    } catch (...) {
+        cout << "Test_0\t->\tFAILED" << endl;
+    }
+
+    try {
         heap1 = new Heap(3);
     } catch(...) {
         cout << "Test_1\t->\tFAILED" << endl;
