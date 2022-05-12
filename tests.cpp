@@ -13,6 +13,7 @@ void check_copy_constructor(Heap heap)
 int main() {
     Heap *heap1 = NULL;
     Heap *heap2 = NULL;
+    Heap *heap3 = NULL;
 
     try {
         heap1 = new Heap(3);
@@ -23,6 +24,7 @@ int main() {
 
     try {
         heap2 = new Heap();
+        heap3 = new Heap();
     } catch(...) {
         cout << "Test_2\t->\tFAILED" << endl;
     }
@@ -137,7 +139,7 @@ int main() {
 	try {
 		heap2->extract_min();
 	} catch (const Heap::heap_error &ex) {
-                if (ex == Heap::HEAP_EMPTY)
+        if (ex == Heap::HEAP_EMPTY)
 			cout << "Test_14\t->\tPASSED" << endl;
 		else
 			cout << "Test_14\t->\tFAILED" << endl;
@@ -145,10 +147,33 @@ int main() {
 		cout << "Test_14\t->\tFAILED" << endl;
 	}
 
-    cout << *heap1;
-    cout << *heap2;
+    try {
+        heap3->add({1, 1});
+        heap3->add({4, 4});
+        heap3->add({6, 6});
+        heap3->add({3, 3});
+        heap3->add({2, 2});
+        heap3->add({5, 5});
+        heap3->add({7, 7});
+        heap3->add({8, 8});
+
+        for (int i = 1; i < 9; ++i) {
+            if (heap3->extract_min().value != i) {
+                cout << "Test_15\t->\tFAILED" << endl;
+                break;
+            }
+        } 
+
+        if (heap3->get_size() == 0) {
+            cout << "Test_15\t->\tPASSED" << endl;
+        }
+    } catch(...) {
+        cout << "Test_15\t->\tFAILED" << endl;
+    }
+
     delete heap1;
     delete heap2;
+    delete heap3;
     return 0;
 }
 

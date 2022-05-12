@@ -24,9 +24,9 @@ Heap::Heap(const Heap& heap)
     m_data = new Node [heap.get_capacity()];
     m_capacity = heap.get_capacity();
     m_size = heap.get_size();
-    for (int i = 0; i < m_size; ++i) {
-        m_data[i] = heap.get_data()[i];    // Автоматически переопределён опаратор присваивания для Node. Нам он подходит,
-    }                                       // так как мы сами не выделяем память для полей это структуры.
+
+    for (int i = 0; i < m_size; ++i)
+        m_data[i] = heap.get_data()[i];
 }
 
 Heap::~Heap()
@@ -37,11 +37,7 @@ Heap::~Heap()
 
 void Heap::sift_down(int parent)
 {
-    if (parent > m_size) {
-        cerr << "Invalid argument: parent = " << parent << endl;
-        throw INVALID_ARGUMENT;
-    }
-
+    
     int left = (1 + parent)*2 - 1;
     int right = (1 + parent)*2;
     int least = parent;
@@ -65,11 +61,6 @@ void Heap::sift_down(int parent)
 
 void Heap::sift_up(int child)
 {
-    if (child > m_size) {
-        cerr << "Invalid argument: child = " << child << endl;
-        throw INVALID_ARGUMENT;
-    }
-
     int parent;
     for (parent = (child - 1)/2; parent >= 0; child = parent, parent = (child - 1)/2) {
 
@@ -79,7 +70,6 @@ void Heap::sift_up(int child)
             m_data[child] = tmp;
         } else
             break;
-
     }
 }
 
@@ -89,8 +79,10 @@ void Heap::add(Node node)
         cerr << "Heap is full" << endl;
         throw HEAP_OVERFLOW;
     }
+
     m_data[m_size] = node;
     ++m_size;
+
     sift_up(m_size-1);
 }
 
@@ -123,11 +115,14 @@ Node Heap::extract_min()
 Heap Heap::operator=(const Heap& heap2)
 {
     delete [] m_data;
+
     m_data = new Node [heap2.get_capacity()];
     m_capacity = heap2.get_capacity();
     m_size = heap2.get_size();
+
     for (int i = 0; i < m_size; ++i) 
         m_data[i] = heap2.get_data()[i];
+
     return *this;
 }
 
@@ -135,16 +130,21 @@ ostream& operator<<(ostream& output, const Heap& heap)
 { 
     output << "Heap: capacity " << heap.get_capacity();
     output << ", current size " << heap.get_size() << endl;
+
     output << "data: " << (void*)heap.get_data() << endl;
+
     int i = 1;
     int j = 1;
     while (i < heap.get_size() + 1) {
+
         while ((i < j*2) && (i < heap.get_size() + 1)) {
             output << "(" << heap.get_data()[i-1].key << ", " << heap.get_data()[i-1].value << ") ";
             ++i;
         }
+
         j *= 2;
         cout << endl;
     }
+    
     return output;
 }
