@@ -1,6 +1,7 @@
-#include "heap.h"
 #include <stdlib.h>
 #include <unistd.h>
+
+#include "heap.h"
 
 using namespace std;
 

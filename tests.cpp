@@ -1,31 +1,106 @@
 #include <iostream>
 
-#include "heap.cpp"
+#include "heap.h"
 
 using namespace std;
 
+
+void check_copy_constructor(Heap heap)
+{
+	cout << heap;
+}
+
 int main() {
-    Heap heap;
-    Heap heap2(5);
-    Node node1 = {1, 1};
-    Node node2 = {2, 2};
+    Heap *heap1 = NULL;
+    Heap *heap2 = NULL;
+
+    try {
+        heap1 = new Heap(3);
+    } catch(...) {
+        cout << "Test_1\t->\tFAILED" << endl;
+    }
+    cout << "Test_1\t->\tPASSED" << endl;
+
+    try {
+        heap2 = new Heap();
+    } catch(...) {
+        cout << "Test_2\t->\tFAILED" << endl;
+    }
+    cout << "Test_2\t->\tPASSED" << endl;
+
+	try {
+		heap1->get_min();
+	} catch (const Heap::heap_error& ex) {
+		if (ex == Heap::HEAP_EMPTY)
+			cout << "Test_3\t->\tPASSED" << endl;
+		else
+			cout << "Test_3\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_3\t->\tFAILED" << endl;
+	}
+
+	try {
+		heap1->extract_min();
+	} catch (const Heap::heap_error& ex) {
+		if (ex == Heap::HEAP_EMPTY)
+			cout << "Test_4\t->\tPASSED" << endl;
+		else
+			cout << "Test_4\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_4\t->\tFAILED" << endl;
+	}
+
+    Node node1 = {2, 2};
+	try {
+		heap1->add(node1);
+	} catch (...) {
+		cout << "Test_5\t->\tFAILED" << endl;
+	}
+	cout << "Test_5\t->\tPASSED" << endl;
+
+    Node node2 = {1, 1};
+	try {
+		heap1->add(node2);
+	} catch (...) {
+		cout << "Test_6\t->\tFAILED" << endl;
+	}
+	cout << "Test_6\t->\tPASSED" << endl;
+
     Node node3 = {3, 3};
+	try {
+		heap1->add(node3);
+	} catch (...) {
+		cout << "Test_7\t->\tFAILED" << endl;
+	}
+	cout << "Test_7\t->\tPASSED" << endl;
+
     Node node4 = {4, 4};
-    Node node5 = {5, 5};
-    Node node6 = {6, 6};
-    Node node7 = {7, 7};
-    Node node8 = {8, 8};
-    heap.add(node1);
-    heap.add(node4);
-    heap.add(node2);
-    heap.add(node3);
-    heap.add(node5);
-    heap.add(node6);
-    heap.add(node7);
-    heap.add(node8);
-    cout << heap.get_min().key << " " << heap.get_min().value << endl;
-    cout << heap << heap;
-    Node node =  heap.extract_min();
-    cout << heap;
+	try {
+		heap1->add(node4);
+	} catch (const Heap::heap_error &ex) {
+		if (ex == Heap::HEAP_OVERFLOW)
+			cout << "Test_8\t->\tPASSED" << endl;
+		else
+			cout << "Test_8\t->\tFAILED" << endl;
+	} catch (...) {
+		cout << "Test_8\t->\tFAILED" << endl;
+	}
+
+	try {
+		*heap2 = *heap1;
+	} catch (...) {
+		cout << "Test_9\t->\tFAILED" << endl;
+	}
+	cout << "Test_9\t->\tPASSED" << endl;
+
+    cout << *heap1;
+    cout << *heap2;
+
+    check_copy_constructor(*heap1);
+    check_copy_constructor(*heap2);
+
+    delete heap1;
+    delete heap2;
     return 0;
 }
+
