@@ -1,6 +1,5 @@
 #pragma once
 
-#include <cstring>
 #include <iostream>
 
 #define HEAP_SIZE 10

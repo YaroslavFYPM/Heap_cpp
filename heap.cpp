@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <unistd.h>
-
 #include "heap.h"
 
 using namespace std;
@@ -145,6 +142,6 @@ ostream& operator<<(ostream& output, const Heap& heap)
         j *= 2;
         cout << endl;
     }
-    
+
     return output;
 }
