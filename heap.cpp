@@ -163,23 +163,3 @@ ostream& operator<<(ostream& output, const Heap<T>& heap)
 }
 
 
-/*
-int main() {
-    Heap<string> h1;
-    Heap<string> heap(5);
-    Node<string> node1 = {3, "rrmr"};
-    Node<string> node2 = {2, "abab"};
-    Node<string> node3 = {5, "aaaa"};
-    heap.add(node1);
-    heap.add(node2);
-    heap.add(node3);
-    cout << heap;
-    h1 = heap;
-    cout << h1;
-    cout << heap.get_min().value << endl;
-    cout << heap.extract_min().value << endl;
-    cout << heap.extract_min().value << endl;
-    return 0;
-}
-*/
-
