@@ -6,15 +6,20 @@
 
 using namespace std;
 
+template<typename T>
 struct Node
 {
     int key;
-    int value;
+    T value;
 };
 
+template<typename T>
 class Heap
 {
 public:
+
+    using NodeType = Node<T>;
+
     enum heap_error {
 	    HEAP_OVERFLOW = 1,
 	    HEAP_EMPTY,
@@ -26,16 +31,18 @@ public:
     Heap(const Heap& heap);
     ~Heap();
 
-    void add(Node node);
-    Node extract_min();
-    Node get_min() const;
+    void add(NodeType node);
+    NodeType extract_min();
+    NodeType get_min() const;
 
     Heap operator=(const Heap& heap);
-    friend ostream& operator<<(ostream& output, const Heap& heap);
+
+    template<typename U>
+    friend ostream& operator<<(ostream& output, const Heap<U>& heap);
 
     int get_capacity() const { return m_capacity; };
     int get_size() const { return m_size; };
-    Node* get_data() const { return m_data; };
+    NodeType* get_data() const { return m_data; };
 
 private:
     void sift_down(int parent);
@@ -43,5 +50,5 @@ private:
 
     int m_capacity;
     int m_size;
-    Node* m_data;
+    NodeType* m_data;
 };

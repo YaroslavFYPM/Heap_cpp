@@ -2,28 +2,31 @@
 
 using namespace std;
 
-Heap::Heap()
+template <typename T>
+Heap<T>::Heap()
 {
-    m_data = new Node [HEAP_SIZE];
+    m_data = new NodeType [HEAP_SIZE];
     m_capacity = HEAP_SIZE;
     m_size = 0;
 }
 
-Heap::Heap(int capacity)
+template <typename T>
+Heap<T>::Heap(int capacity)
 {
     if (capacity < 1) {
         cerr << "Invalid argument: " << capacity << endl;
         throw INVALID_ARGUMENT;
     }
 
-    m_data = new Node [capacity];
+    m_data = new NodeType [capacity];
     m_capacity = capacity;
     m_size = 0;
 }
 
-Heap::Heap(const Heap& heap)
+template <typename T>
+Heap<T>::Heap(const Heap& heap)
 {
-    m_data = new Node [heap.get_capacity()];
+    m_data = new NodeType [heap.get_capacity()];
     m_capacity = heap.get_capacity();
     m_size = heap.get_size();
 
@@ -31,13 +34,15 @@ Heap::Heap(const Heap& heap)
         m_data[i] = heap.get_data()[i];
 }
 
-Heap::~Heap()
+template <typename T>
+Heap<T>::~Heap()
 {
     delete [] m_data;
     m_data = NULL;
 }
 
-void Heap::sift_down(int parent)
+template <typename T>
+void Heap<T>::sift_down(int parent)
 {
     
     int left = (1 + parent)*2 - 1;
@@ -53,7 +58,7 @@ void Heap::sift_down(int parent)
         least = right;
 
     if (least != parent) {
-        Node tmp = m_data[parent];
+        NodeType tmp = m_data[parent];
         m_data[parent] = m_data[least];
         m_data[least] = tmp;
 
@@ -61,13 +66,14 @@ void Heap::sift_down(int parent)
     }
 }
 
-void Heap::sift_up(int child)
+template <typename T>
+void Heap<T>::sift_up(int child)
 {
     int parent;
     for (parent = (child - 1)/2; parent >= 0; child = parent, parent = (child - 1)/2) {
 
         if ( m_data[parent].key > m_data[child].key ) {
-            Node tmp = m_data[parent];
+            NodeType tmp = m_data[parent];
             m_data[parent] = m_data[child];
             m_data[child] = tmp;
         } else
@@ -75,7 +81,8 @@ void Heap::sift_up(int child)
     }
 }
 
-void Heap::add(Node node)
+template <typename T>
+void Heap<T>::add(NodeType node)
 {
     if (m_capacity == m_size) {
         cerr << "Heap is full" << endl;
@@ -88,7 +95,8 @@ void Heap::add(Node node)
     sift_up(m_size-1);
 }
 
-Node Heap::get_min() const
+template <typename T>
+Node<T> Heap<T>::get_min() const
 {
     if (m_size < 1) {
         cerr << "Heap is empty" << endl;
@@ -98,14 +106,15 @@ Node Heap::get_min() const
     return m_data[0];
 }
 
-Node Heap::extract_min()
+template <typename T>
+Node<T> Heap<T>::extract_min()
 {
     if (m_size < 1) {
         cerr << "Heap is empty" << endl;
         throw HEAP_EMPTY;
     }
 
-    Node min = m_data[0];
+    NodeType min = m_data[0];
     m_data[0] = m_data[m_size-1];
     --m_size;
 
@@ -114,11 +123,12 @@ Node Heap::extract_min()
     return min;
 }
 
-Heap Heap::operator=(const Heap& heap2)
+template <typename T>
+Heap<T> Heap<T>::operator=(const Heap<T>& heap2)
 {
     delete [] m_data;
 
-    m_data = new Node [heap2.get_capacity()];
+    m_data = new NodeType [heap2.get_capacity()];
     m_capacity = heap2.get_capacity();
     m_size = heap2.get_size();
 
@@ -128,7 +138,8 @@ Heap Heap::operator=(const Heap& heap2)
     return *this;
 }
 
-ostream& operator<<(ostream& output, const Heap& heap)
+template <typename T>
+ostream& operator<<(ostream& output, const Heap<T>& heap)
 { 
     output << "Heap: capacity " << heap.get_capacity();
     output << ", current size " << heap.get_size() << endl;
@@ -150,3 +161,25 @@ ostream& operator<<(ostream& output, const Heap& heap)
 
     return output;
 }
+
+
+/*
+int main() {
+    Heap<string> h1;
+    Heap<string> heap(5);
+    Node<string> node1 = {3, "rrmr"};
+    Node<string> node2 = {2, "abab"};
+    Node<string> node3 = {5, "aaaa"};
+    heap.add(node1);
+    heap.add(node2);
+    heap.add(node3);
+    cout << heap;
+    h1 = heap;
+    cout << h1;
+    cout << heap.get_min().value << endl;
+    cout << heap.extract_min().value << endl;
+    cout << heap.extract_min().value << endl;
+    return 0;
+}
+*/
+
